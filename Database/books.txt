@@ -1,0 +1,26 @@
+1,Intermezzo,Sally Rooney,2,Fiction,New,26
+2,The Mighty Red,Louise Erdrich,2,Fiction,Like New,25
+3,Swift River,Essie Chambers,2,Fiction,Used,25
+4,Long Island Compromise,Taffy Brodresser-Akner,2,Fiction,New,30
+5,This Is Why We Lied,Karin Slaughter,8,Mystery,New,6
+6,The Grey Wolf,Louise Penny,8,Mystery,Like New,15
+7,The Blue Hour,Paula Hawkins,8,Mystery,Used,15
+8,All the Colors of the Dark,Chris Whitaker,8,Mystery,New,14
+9,Wind and Truth,Brandon Sanderson,9,Fantasy,New,36
+10,The Songbird and the Heart of Stone,Carissa Broadbent,9,Fantasy,Like New,27
+11,Phantasma,Kaylie Smith,9,Fantasy,Used,19
+12,The Games Gods Play,Abigail Owen,9,Fantasy,New,33
+13,We Used to Live Here,Marcus Kliewer,8,Horror,New,29
+14,Incidents Around the House,Josh Malerman,2,Horror,Like New,28
+15,Graveyard Shift,ML Rio,9,Horror,Used,17
+16,Horror Movie,Paul Tremblay,8,Horror,New,30
+17,A Christmas Duet,Debbie Macomber,2,Romance,New,10
+18,The Cinnamon Bun Book Store,Laurie Gilmore,2,Romance,Like New,19
+19,Mind Games,Nora Roberts,2,Romance,Used,15
+20,Funny Story,Emily Henry,2,Romance,New,13
+23,Happy Feet 2,author to be added,2,Mystery,New,10.0
+24,Happy Feet 1,author to be added,2,Mystery,New,10.0
+25,Happy Feet 3,author to be added,2,Romance,New,12.0
+26,Star Wars: The Trilogy,author to be added,2,Sci-Fi,New,25.0
+27,Turtle Troops,author to be added,2,Mystery,New,1.0
+29,Harry Pottah: Parody,author to be added,15,Parody,New,42.5
