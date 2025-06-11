@@ -1,8 +1,15 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+
+// import java.io.File;
+// import java.io.FileWriter;
+// import java.io.IOException;
+// import java.io.File;
+// import java.io.FileWriter;
+// import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Map;
-import java.util.Scanner;
+// import java.util.Scanner;
+// import java.util.Scanner;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,29 +20,36 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class CartView extends Windows {
+public class CartView extends Windows
+{
 	private int buyerID;
 	Label emptyCartLabel = new Label("Cart is Empty, Keep Shopping :)");
 	HBox emptyCartBox = new HBox(emptyCartLabel);
-	public CartView(Map<Book, Integer> book, Stage stage, int buyerID) {
+	private static final SQLDatabase db = SQLDatabase.getInstance();
+
+	public CartView(Map<Book, Integer> book, Stage stage, int buyerID)
+	{
 		super();
 		super.changeSize(600, 600);
 		setUp(book, stage);
 		this.buyerID = buyerID;
 	}
-	
-	public void setUp(Map<Book, Integer> book, Stage view) {
+
+	public void setUp(Map<Book, Integer> book, Stage view)
+	{
 		double total = 0;
 		VBox ret = new VBox(10);
 		Label receiptConfirmationLabel = new Label("Order Confirmed ✅");
 		VBox receipt = new VBox(10);
 		receipt.getChildren().addAll(receiptConfirmationLabel);
-		for(Book item: book.keySet()) {
+		for (Book item : book.keySet())
+		{
 			HBox count = new HBox(15);
 			HBox receiptCount = new HBox(15);
-			count.getChildren().addAll(new Label(item.getName() + " x " + String.valueOf(book.get(item))), new Label("$" + String.valueOf(book.get(item) * item.getBasePrice())));
-			receiptCount.getChildren().addAll(new Label(item.getName() + " x " + String.valueOf(book.get(item))), new Label("$" + String.valueOf(book.get(item) * item.getBasePrice())));
-			total += item.getBasePrice() * book.get(item); // price of a book * quantity
+			count.getChildren().addAll(new Label(item.getName() + " x " + String.valueOf(book.get(item))), new Label("$" + String.valueOf(trunc(book.get(item) * item.getBasePrice()))));
+			receiptCount.getChildren().addAll(new Label(item.getName() + " x " + String.valueOf(book.get(item))), new Label("$" + String.valueOf(trunc(book.get(item) * item.getBasePrice()))));
+			total += item.getBasePrice() * book.get(item);
+			// price of a book * quantity
 			ret.getChildren().add(count);
 			receipt.getChildren().add(receiptCount);
 		}
@@ -45,20 +59,20 @@ public class CartView extends Windows {
 		totalPrice.getChildren().addAll(new Label("Subtotal:"), new Label("$" + String.valueOf(total)));
 		HBox receiptTotalPrice = new HBox(10);
 		receiptTotalPrice.getChildren().addAll(new Label("Subtotal:"), new Label("$" + String.valueOf(total)));
-		
+
 		HBox tax = new HBox(10);
 		tax.getChildren().addAll(new Label("Tax:"), new Label("8%"));
 		HBox receiptTax = new HBox(10);
 		receiptTax.getChildren().addAll(new Label("Tax:"), new Label("8%"));
-		
+
 		HBox finalPrice = new HBox(10);
 		finalPrice.getChildren().addAll(new Label("Total:"), new Label("$" + String.valueOf(total * 108 / 100)));
 		HBox receiptFinalPrice = new HBox(10);
 		receiptFinalPrice.getChildren().addAll(new Label("Total:"), new Label("$" + String.valueOf(total * 108 / 100)));
-		
+
 		ret.getChildren().addAll(totalPrice, tax, finalPrice);
 		receipt.getChildren().addAll(receiptTotalPrice, receiptTax, receiptFinalPrice);
-		
+
 		HBox choice = new HBox(10);
 		Button checkOut = new Button("Checkout");
 		Button cancel = new Button("Cancel");
@@ -70,7 +84,7 @@ public class CartView extends Windows {
 		Pane cartPane = new Pane();
 		cartPane.setStyle("-fx-background-color: rgb(140,29,64), rgb(255,198,39); -fx-background-insets: 0, 5");
 		cartPane.getChildren().addAll(ret);
-		//cartPane.setVisible(false);
+		// cartPane.setVisible(false);
 
 		Pane confirmationPane = new Pane();
 		confirmationPane.setVisible(false);
@@ -87,22 +101,25 @@ public class CartView extends Windows {
 			receiptPane.setVisible(true);
 			book.clear();
 
-			try
-			{
-				Scanner reader = new Scanner(new File ("Database/cart" + Integer.toString(buyerID) + ".txt"));
-				FileWriter writer = new FileWriter("Database/cart" + Integer.toString(buyerID) + ".txt");
+			db.removeAllFromCart(buyerID);
 
-				while (reader.hasNextLine())
-				{
-					writer.write("\n");
-				}
-				reader.close();
-				writer.close();
-			}
-			catch(IOException e)
-			{
-				e.printStackTrace();
-			}
+			// try
+			// {
+			// Scanner reader = new Scanner(new File("Database/cart" +
+			// Integer.toString(buyerID) + ".txt"));
+			// FileWriter writer = new FileWriter("Database/cart" +
+			// Integer.toString(buyerID) + ".txt");
+
+			// while (reader.hasNextLine())
+			// {
+			// writer.write("\n");
+			// }
+			// reader.close();
+			// writer.close();
+			// } catch (IOException e)
+			// {
+			// e.printStackTrace();
+			// }
 
 		});
 		Button noButton = new Button("No");
@@ -112,7 +129,6 @@ public class CartView extends Windows {
 			cartPane.setVisible(true);
 			choice.setVisible(true);
 
-			
 		});
 
 		Button homeButton = new Button("Home");
@@ -132,16 +148,18 @@ public class CartView extends Windows {
 		receipt.getChildren().addAll(homeButton);
 		receipt.setAlignment(Pos.CENTER);
 		receiptPane.getChildren().addAll(receipt);
-		
-		checkOut.setOnAction(event-> {
-			//show confirmed screen along with transaction added to list.
+
+		checkOut.setOnAction(event ->
+		{
+			// show confirmed screen along with transaction added to list.
 			cartPane.setVisible(false);
 			choice.setVisible(false);
 			confirmationPane.setVisible(true);
-			
+
 		});
-		
-		cancel.setOnAction(event-> {
+
+		cancel.setOnAction(event ->
+		{
 			this.close();
 			view.show();
 			totalPrice.setVisible(true);
@@ -151,27 +169,30 @@ public class CartView extends Windows {
 			clearCart.setVisible(true);
 			cartPane.getChildren().remove(emptyCartBox);
 		});
-		
-		clearCart.setOnAction(event-> {
+
+		clearCart.setOnAction(event ->
+		{
 			book.clear();
+			db.removeAllFromCart(buyerID);
 
-			try
-			{
-				Scanner reader = new Scanner(new File ("Database/cart" + Integer.toString(buyerID) + ".txt"));
-				FileWriter writer = new FileWriter("Database/cart" + Integer.toString(buyerID) + ".txt");
+			// try
+			// {
+			// Scanner reader = new Scanner(new File("Database/cart" +
+			// Integer.toString(buyerID) + ".txt"));
+			// FileWriter writer = new FileWriter("Database/cart" +
+			// Integer.toString(buyerID) + ".txt");
 
-				while (reader.hasNextLine())
-				{
-					writer.write("\n");
-				}
-				reader.close();
-				writer.close();
-			}
-			catch(IOException e)
-			{
-				e.printStackTrace();
-			}
-			
+			// while (reader.hasNextLine())
+			// {
+			// writer.write("\n");
+			// }
+			// reader.close();
+			// writer.close();
+			// } catch (IOException e)
+			// {
+			// e.printStackTrace();
+			// }
+
 			this.close();
 			view.show();
 		});
@@ -186,12 +207,18 @@ public class CartView extends Windows {
 			cartPane.getChildren().add(emptyCartBox);
 			emptyCartBox.setPadding(new Insets(10));
 		}
-		
+
 		super.pane.setAlignment(Pos.CENTER);
 		super.add(cartPane, 0, 0);
-		super.add(confirmationPane,0,0);
-		super.add(receiptPane,0,0);
+		super.add(confirmationPane, 0, 0);
+		super.add(receiptPane, 0, 0);
 		super.add(choice, 0, 1);
 	}
-	
+
+	private Double trunc(Double value)
+	{
+		double truncated = new BigDecimal(value).setScale(2, RoundingMode.HALF_UP).doubleValue();
+		return truncated;
+	}
+
 }

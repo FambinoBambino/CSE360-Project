@@ -7,8 +7,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class ProfileView extends Windows {
-    private User user;
+public class ProfileView extends Windows
+{
+    // private User user;
     private Label firstName;
     private Label lastName;
     private Label email;
@@ -16,10 +17,12 @@ public class ProfileView extends Windows {
     private Label password;
     private Button backButton, showORhideButton;
     private String hidePass = "***", showPass;
-    private boolean shown = false; // keeps track of whether password is being shown or not
+    private boolean shown = false;
+    // keeps track of whether password is being shown or not
 
-    public ProfileView(Stage primaryStage, User user) {
-        this.user = user;
+    public ProfileView(Stage primaryStage, User user)
+    {
+        // this.user = user;
 
         Label title = new Label("User Information");
         firstName = new Label();
@@ -30,12 +33,14 @@ public class ProfileView extends Windows {
         backButton = new Button("Back");
         showORhideButton = new Button("Show");
 
-        if (user == null) {
+        if (user == null)
+        {
             firstName.setText("No User Found");
             lastName.setText("No User Found");
             email.setText("No Email");
             userID.setText("No User Found");
-        } else {
+        } else
+        {
             firstName.setText(user.getFirstName());
             lastName.setText(user.getLastName());
             email.setText(user.geteAddress());
@@ -45,33 +50,24 @@ public class ProfileView extends Windows {
 
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(10));
-        layout.getChildren().addAll(
-            title,
-            new HBox(10, new Label("First Name:"), firstName),
-            new HBox(10, new Label("Last Name:"), lastName),
-            new HBox(10, new Label("Email Address:"), email),
-            new HBox(10, new Label("User ID:"), userID),
-            new HBox(10, new Label("Password:"), password, showORhideButton),
-            backButton
-        );
+        layout.getChildren().addAll(title, new HBox(10, new Label("First Name:"), firstName), new HBox(10, new Label("Last Name:"), lastName), new HBox(10, new Label("Email Address:"), email), new HBox(10, new Label("User ID:"), userID), new HBox(10, new Label("Password:"), password, showORhideButton), backButton);
 
         Pane profilePane = new Pane();
-		profilePane.setStyle("-fx-background-color: rgb(140,29,64), rgb(255,198,39); -fx-background-insets: 0, 5");
-		profilePane.getChildren().addAll(layout);
+        profilePane.setStyle("-fx-background-color: rgb(140,29,64), rgb(255,198,39); -fx-background-insets: 0, 5");
+        profilePane.getChildren().addAll(layout);
         super.add(profilePane, 0, 0);
         super.pane.setAlignment(Pos.CENTER);
 
         backButton.setOnAction(event -> back(primaryStage));
-        showORhideButton.setOnAction(event -> 
+        showORhideButton.setOnAction(event ->
         {
             if (shown == false)
             {
                 showORhideButton.setText("Hide");
                 password.setText(showPass);
                 shown = true;
-                
-            }
-            else if (shown == true)
+
+            } else if (shown == true)
             {
                 showORhideButton.setText("Show");
                 password.setText(hidePass);
@@ -80,7 +76,8 @@ public class ProfileView extends Windows {
         });
     }
 
-    private void back(Stage primaryStage) {
+    private void back(Stage primaryStage)
+    {
         this.close();
         primaryStage.show();
     }

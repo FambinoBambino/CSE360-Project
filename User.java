@@ -1,9 +1,11 @@
 // 11-4-24
 // Adrian Sida Q.
 
-public class User 
+public class User
 {
-    private int userCount = 1;//keeps track of overall number of users, might need to extract from file later on.
+    private int userCount = 1;
+    // keeps track of overall number of users, might need to extract from file
+    // later on.
     private String firstName;
     private String lastName;
     private String password;
@@ -13,22 +15,28 @@ public class User
     private String phoneNumber;
     private boolean dualUser;
     private boolean suspendedStatus;// might have to include
-    private int suspendedTime; // might have to find a data type that can store the real-world time for the suspension -- Date class getTime() in Java returns a long of milliseconds - kyle
+    private int suspendedTime;
+    // might have to find a data type that can store the real-world time for the
+    // suspension -- Date class getTime() in Java returns a long of milliseconds
+    // - kyle
 
-    //Since no user can exist without sign up, there will be no default constructor
+    // Since no user can exist without sign up, there will be no default
+    // constructor
     public User(String firstName, String lastName, String password, String eAddress, String phoneNumber, String shippingAddress)
-    {//Set items that will be needed for User sign up, rest will be assigned later.
+    {// Set items that will be needed for User sign up, rest will be assigned
+     // later.
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.eAddress = eAddress;
-        this.userID = Database.getInstance().getUID();
+        // this.userID = SQLDatabase.getInstance().getUID();
         this.phoneNumber = phoneNumber;
         this.shippingAddress = shippingAddress;
     }
-    
+
     public User(String firstName, String lastName, String password, String eAddress, String phoneNumber, String shippingAddress, int buyerID)
-    {//Set items that will be needed for User sign up, rest will be assigned later.
+    {// Set items that will be needed for User sign up, rest will be assigned
+     // later.
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -37,76 +45,94 @@ public class User
         this.phoneNumber = phoneNumber;
         this.shippingAddress = shippingAddress;
     }
-    
-    public void setFirstName(String firstName) {
+
+    public void setFirstName(String firstName)
+    {
         this.firstName = firstName;
     }
 
-    public String getFirstName() {
+    public String getFirstName()
+    {
         return firstName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(String lastName)
+    {
         this.lastName = lastName;
     }
 
-    public String getLastName() {
+    public String getLastName()
+    {
         return lastName;
     }
 
-    public void setDualUser(boolean dualUser) {
+    public void setDualUser(boolean dualUser)
+    {
         this.dualUser = dualUser;
     }
 
-    public boolean getdualUser() {
+    public boolean getdualUser()
+    {
         return dualUser;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password)
+    {
         this.password = password;
     }
 
-    public String getPassword() {
+    public String getPassword()
+    {
         return password;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber)
+    {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getPhoneNumber() {
+    public String getPhoneNumber()
+    {
         return phoneNumber;
     }
 
-    public void setShippingAddress(String shippingAddress) {
+    public void setShippingAddress(String shippingAddress)
+    {
         this.shippingAddress = shippingAddress;
     }
 
-    public String getShippingAddress() {
+    public String getShippingAddress()
+    {
         return shippingAddress;
     }
 
-    public void setSuspendedStatus(boolean suspendedStatus) {
+    public void setSuspendedStatus(boolean suspendedStatus)
+    {
         this.suspendedStatus = suspendedStatus;
     }
 
-    public boolean getSuspendedStatus() {
+    public boolean getSuspendedStatus()
+    {
         return suspendedStatus;
     }
 
-    public int getSuspendedTime() {
+    public int getSuspendedTime()
+    {
         return suspendedTime;
     }
-    
-    public String geteAddress() {
+
+    public String geteAddress()
+    {
         return eAddress;
     }
-    
-    public int getUserCount() {
+
+    public int getUserCount()
+    {
         return userCount;
     }
 
-    public String getUserID() {
+    public String getUserID()
+    {
         return "" + userID;
     }
 }
