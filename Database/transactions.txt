@@ -1,2 +1,0 @@
-transactionID, buyer id, seller id, book id, time in milliseconds, status, amount
-1,2,4,1,474747747,processed,16.53

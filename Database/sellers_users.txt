@@ -1,5 +1,0 @@
-2,John,Doe,DoeJ@gmail.com,ezpass,n/a,n/a
-8,Lemon,Green,LG@gmail.com,Lego,n/a,n/a
-9,Sun,Moon,NiteNDay@gmail.com,!@#$%^&*()_+,n/a,n/a 
-14,Gee,Eazy,GEazy@gmail.com,geazy,n/a,n/a
-16,Charles,Davis,CDavis@gmail.com,CDavis,n/a,n/a
