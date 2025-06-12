@@ -1,0 +1,16 @@
+# Ignore macOS system files
+.DS_Store
+
+# Ignore VSCode settings
+.vscode/
+
+# Ignore compiled Java class files
+*.class
+
+# Ignore Eclipse/IDE config (if any)
+*.iml
+.idea/
+eclipse-java-allman.xml
+
+# Ignore database directory if runtime only
+Database/
