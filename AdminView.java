@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class AdminView extends Windows
-{
+{// Responsible for displaying the admin page for admin users
 	Stage loginStage = new Stage();
 
 	public AdminView(Stage loginStage)
@@ -19,50 +19,45 @@ public class AdminView extends Windows
 		// call initializer for parent class Windows
 		this.loginStage = loginStage;
 
-		// customizing the looks for the windows.
 		Label homePageLabel = new Label("Admin Home Page");
-		// label for displaying home page message.
 
-		BackgroundFill backgroundFill = new BackgroundFill(Color.rgb(140, 29, 64), // maroon?
-				new CornerRadii(0, 2, 2, 0, true),
-				// CornerRadii: (top-left, top-right, bottom-right, bottom-left)
-				Insets.EMPTY);
+		BackgroundFill backgroundFill = new BackgroundFill(Color.rgb(140, 29, 64), new CornerRadii(0, 2, 2, 0, true), Insets.EMPTY);
 
 		Button transactionButton = new Button("Transaction");
-		transactionButton.setPadding(new Insets(20, 30, 20, 30));
-		// Padding: top, right, bottom, left
-		transactionButton.setTextFill(Color.rgb(255, 198, 39));
-		transactionButton.setBackground(new Background(backgroundFill));
+		setButtonColors(transactionButton, backgroundFill);
+		// transactionButton.setPadding(new Insets(20, 30, 20, 30));
+		// transactionButton.setTextFill(Color.rgb(255, 198, 39));
+		// transactionButton.setBackground(new Background(backgroundFill));
 		transactionButton.setOnAction(event ->
-		{
+		{// Maroon background and gold buttons to match ASU colors
 			System.out.println("transaction");
 		});
 
 		Button statsButton = new Button("View Stats");
-		statsButton.setPadding(new Insets(20, 30, 20, 30));
-		// Padding: top, right, bottom, left
-		statsButton.setTextFill(Color.rgb(255, 198, 39));
-		statsButton.setBackground(new Background(backgroundFill));
+		setButtonColors(statsButton, backgroundFill);
+		// statsButton.setPadding(new Insets(20, 30, 20, 30));
+		// statsButton.setTextFill(Color.rgb(255, 198, 39));
+		// statsButton.setBackground(new Background(backgroundFill));
 		statsButton.setOnAction(event ->
 		{
 			System.out.println("stats");
 		});
 
 		Button manageButton = new Button("Manage");
-		manageButton.setPadding(new Insets(20, 30, 20, 30));
-		// Padding: top, right, bottom, left
-		manageButton.setTextFill(Color.rgb(255, 198, 39));
-		manageButton.setBackground(new Background(backgroundFill));
+		setButtonColors(manageButton, backgroundFill);
+		// manageButton.setPadding(new Insets(20, 30, 20, 30));
+		// manageButton.setTextFill(Color.rgb(255, 198, 39));
+		// manageButton.setBackground(new Background(backgroundFill));
 		manageButton.setOnAction(event ->
 		{
 			System.out.println("manage");
 		});
 
 		Button logoutButton = new Button("Log Out");
-		logoutButton.setPadding(new Insets(20, 30, 20, 30));
-		// Padding: top, right, bottom, left
-		logoutButton.setTextFill(Color.rgb(255, 198, 39));
-		logoutButton.setBackground(new Background(backgroundFill));
+		setButtonColors(logoutButton, backgroundFill);
+		// logoutButton.setPadding(new Insets(20, 30, 20, 30));
+		// logoutButton.setTextFill(Color.rgb(255, 198, 39));
+		// logoutButton.setBackground(new Background(backgroundFill));
 		logoutButton.setOnAction(event ->
 		{
 			System.out.println("Log out");
@@ -75,6 +70,13 @@ public class AdminView extends Windows
 		super.add(homePageBox, 0, 0);
 		super.pane.setAlignment(Pos.CENTER_LEFT);
 
+	}
+
+	public void setButtonColors(Button button, BackgroundFill bFill)
+	{
+		button.setPadding(new Insets(20, 30, 20, 30));
+		button.setTextFill(Color.rgb(255, 198, 39));
+		button.setBackground(new Background(bFill));
 	}
 
 }
