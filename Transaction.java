@@ -1,117 +1,123 @@
-import java.util.Date;
+/*
+ * Was initially planned as seen in Buyer receipt panel, but we never got to
+ * implement
+ */
 
-public class Transaction
-{
-    private int transactionID;
-    private Buyer buyer;
-    private Seller seller;
-    private Book book;
-    private Date transactionDate;
-    private String status;
-    private double amount;
+// import java.util.Date;
 
-    public Transaction(int transactionID, Buyer buyer, Seller seller, Book book, Date transactionDate, String status, double amount)
-    {
-        this.transactionID = transactionID;
-        this.buyer = buyer;
-        this.seller = seller;
-        this.book = book;
-        this.transactionDate = transactionDate;
-        this.status = status;
-        this.amount = amount;
-    }
+// public class Transaction
+// {
+// private int transactionID;
+// private Buyer buyer;
+// private Seller seller;
+// private Book book;
+// private Date transactionDate;
+// private String status;
+// private double amount;
 
-    public void processTransaction()
-    {
-        // transaction processing logic
-        this.status = "processed";
-    }
+// public Transaction(int transactionID, Buyer buyer, Seller seller, Book book,
+// Date transactionDate, String status, double amount)
+// {
+// this.transactionID = transactionID;
+// this.buyer = buyer;
+// this.seller = seller;
+// this.book = book;
+// this.transactionDate = transactionDate;
+// this.status = status;
+// this.amount = amount;
+// }
 
-    public void cancelTransaction()
-    {
-        // cancellation logic
-        this.status = "cancelled";
-    }
+// public void processTransaction()
+// {
+// // transaction processing logic
+// this.status = "processed";
+// }
 
-    public void refundTransaction()
-    {
-        // refund logic
-        this.status = "refunded";
-    }
+// public void cancelTransaction()
+// {
+// // cancellation logic
+// this.status = "cancelled";
+// }
 
-    public Transaction getTransaction()
-    {
-        return this;
-    }
+// public void refundTransaction()
+// {
+// // refund logic
+// this.status = "refunded";
+// }
 
-    // getters and setters for every attribute
-    public int getTransactionID()
-    {
-        return transactionID;
-    }
+// public Transaction getTransaction()
+// {
+// return this;
+// }
 
-    public void setTransactionID(int transactionID)
-    {
-        this.transactionID = transactionID;
-    }
+// // getters and setters for every attribute
+// public int getTransactionID()
+// {
+// return transactionID;
+// }
 
-    public Buyer getBuyer()
-    {
-        return buyer;
-    }
+// public void setTransactionID(int transactionID)
+// {
+// this.transactionID = transactionID;
+// }
 
-    public void setBuyer(Buyer buyer)
-    {
-        this.buyer = buyer;
-    }
+// public Buyer getBuyer()
+// {
+// return buyer;
+// }
 
-    public User getSeller()
-    {
-        return seller;
-    }
+// public void setBuyer(Buyer buyer)
+// {
+// this.buyer = buyer;
+// }
 
-    public void setSeller(Seller seller)
-    {
-        this.seller = seller;
-    }
+// public User getSeller()
+// {
+// return seller;
+// }
 
-    public Book getBook()
-    {
-        return book;
-    }
+// public void setSeller(Seller seller)
+// {
+// this.seller = seller;
+// }
 
-    public void setBook(Book book)
-    {
-        this.book = book;
-    }
+// public Book getBook()
+// {
+// return book;
+// }
 
-    public Date getTransactionDate()
-    {
-        return transactionDate;
-    }
+// public void setBook(Book book)
+// {
+// this.book = book;
+// }
 
-    public void setTransactionDate(Date transactionDate)
-    {
-        this.transactionDate = transactionDate;
-    }
+// public Date getTransactionDate()
+// {
+// return transactionDate;
+// }
 
-    public String getStatus()
-    {
-        return status;
-    }
+// public void setTransactionDate(Date transactionDate)
+// {
+// this.transactionDate = transactionDate;
+// }
 
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
+// public String getStatus()
+// {
+// return status;
+// }
 
-    public double getAmount()
-    {
-        return amount;
-    }
+// public void setStatus(String status)
+// {
+// this.status = status;
+// }
 
-    public void setAmount(double amount)
-    {
-        this.amount = amount;
-    }
-}
+// public double getAmount()
+// {
+// return amount;
+// }
+
+// public void setAmount(double amount)
+// {
+// this.amount = amount;
+// }
+// }

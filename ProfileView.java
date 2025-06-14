@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 
 public class ProfileView extends Windows
 {
-    // private User user;
     private Label firstName;
     private Label lastName;
     private Label email;
@@ -17,13 +16,10 @@ public class ProfileView extends Windows
     private Label password;
     private Button backButton, showORhideButton;
     private String hidePass = "***", showPass;
-    private boolean shown = false;
-    // keeps track of whether password is being shown or not
+    private boolean shown = false; // tracks if password is being shown or not
 
     public ProfileView(Stage primaryStage, User user)
-    {
-        // this.user = user;
-
+    {// Displays information current user account
         Label title = new Label("User Information");
         firstName = new Label();
         lastName = new Label();
@@ -60,13 +56,12 @@ public class ProfileView extends Windows
 
         backButton.setOnAction(event -> back(primaryStage));
         showORhideButton.setOnAction(event ->
-        {
+        {// allows user to show or hide their password. By default it is hidden
             if (shown == false)
             {
                 showORhideButton.setText("Hide");
                 password.setText(showPass);
                 shown = true;
-
             } else if (shown == true)
             {
                 showORhideButton.setText("Show");

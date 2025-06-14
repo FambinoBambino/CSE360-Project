@@ -1,6 +1,3 @@
-// import java.io.FileNotFoundException;
-// import java.io.IOException;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -16,7 +13,7 @@ public class LoginView extends Windows
 	private PasswordField password;
 	private Button login;
 	private Button signUp;
-	private int buyerID = -1;
+	private int userID = -1;
 	private SQLDatabase db = SQLDatabase.getInstance();
 
 	private AdminView adminPage = new AdminView(super.windowStage);
@@ -28,7 +25,6 @@ public class LoginView extends Windows
 		super(); // call initializer for parent class Windows
 
 		Label wrongCred = new Label("You have entered the wrong credentials");
-		// label for displaying wrong message.
 		password = new PasswordField();
 		email = new TextField();
 		ComboBox<String> roles = new ComboBox<>();
@@ -43,9 +39,8 @@ public class LoginView extends Windows
 		super.add(userInput, 0, 0);
 		super.pane.setAlignment(Pos.CENTER);
 
-		// set functionality for buttons
 		login.setOnAction(event ->
-		{
+		{// If user found, then send them to their repsective page
 			String type = roles.getValue();
 			Boolean result = false;
 			if (type.equals("Admin"))
@@ -69,7 +64,7 @@ public class LoginView extends Windows
 					email.clear();
 					password.clear();
 					this.windowStage.hide();
-					sellerPage.setSellerID(buyerID);
+					sellerPage.setSellerID(userID);
 					sellerPage.display();
 				}
 
@@ -82,13 +77,13 @@ public class LoginView extends Windows
 					email.clear();
 					password.clear();
 					this.windowStage.hide();
-					buyerPage.setBuyerID(buyerID);
+					buyerPage.setBuyerID(userID);
 					buyerPage.display();
 				}
 
 			}
 			if (!result)
-			{
+			{// If no valid user is found, display message of wrong credentials
 				wrongCred.setStyle("-fx-text-fill: red;");
 				if (!userInput.getChildren().contains(wrongCred))
 				{
@@ -99,7 +94,7 @@ public class LoginView extends Windows
 		});
 
 		signUp.setOnAction(event ->
-		{
+		{// redirects user to sign up page
 			signUp(super.windowStage);
 			for (int i = 0; i < userInput.getChildren().size(); i++)
 			{
@@ -118,11 +113,11 @@ public class LoginView extends Windows
 	}
 
 	public boolean validate(String email, String password, String userType)
-	{
-		int bID = db.validateFromEmail(email, password, userType);
-		if (bID != -1)
+	{// returns true if user is found, else returns false
+		int uID = db.validateFromEmail(email, password, userType);
+		if (uID != -1)
 		{
-			buyerID = bID;
+			userID = uID;
 			return true;
 		}
 		return false;
@@ -134,7 +129,7 @@ public class LoginView extends Windows
 	}
 
 	public void signUp(Stage stage)
-	{
+	{// sets the scene for the sign up page
 		stage.hide();
 		Windows signUp = new Windows();
 		VBox signupWindow = new VBox(10);
@@ -166,14 +161,19 @@ public class LoginView extends Windows
 		signUp.display();
 		error.setText("");
 		signUpButton.setOnAction(event ->
-		{
+		{// Enters the user into the SQL databse
 			if (!email.getText().strip().isEmpty() && !password.getText().strip().isEmpty() && !first.getText().strip().isEmpty() && !last.getText().strip().isEmpty())
-			{
+			{// checks to see that all inputs are valid
 				String role = roles.getValue();
 				if (db.ExistingUser(email.getText().strip(), role) == false)
-				{
-					// note: Only buyer and seller can signup, admin comes
+				{// note: Only buyer and seller can signup, admin comes
 					// preloaded in the text file.
+					/*
+					 * Originally, admin was going to be able to ad other admins
+					 * from their page, but we didn't get to flesh out the admin
+					 * page and now we would have to manually add them through
+					 * SQL. We also used text files as DB before SQL.
+					 */
 					db.addUser(first.getText(), last.getText(), email.getText(), password.getText(), role);
 					signUp.close();
 					success.display();
@@ -190,7 +190,7 @@ public class LoginView extends Windows
 		});
 
 		backToLogin.setOnAction(event ->
-		{
+		{// sends user back to login page
 			email.clear();
 			password.clear();
 			roles.setValue("buyer");

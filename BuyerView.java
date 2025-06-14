@@ -1,14 +1,7 @@
-
-// import java.io.File;
-// import java.io.FileNotFoundException;
-// import java.io.FileWriter;
-// import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-// import java.util.Scanner;
-
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -22,12 +15,9 @@ import javafx.util.Pair;
 
 public class BuyerView extends Windows
 {
-	// NOT SQL UPDATED SINCE SQLDATABSE IS MISSING SOME BUYER-SPECIFIC METHODS
-	// Variables
-	Map<Book, Integer> cartItems; // cart items
-	List<Book> books;
-	// a list of book that is presented to the buyer
-	int buyerID = -1;
+	Map<Book, Integer> cartItems;
+	List<Book> books; // a list of book that is presented to the buyer
+	int buyerID = -1; // -1 is default to indicate error
 	private static final SQLDatabase db = SQLDatabase.getInstance();
 
 	Stage loginStage = new Stage();
@@ -109,34 +99,11 @@ public class BuyerView extends Windows
 
 		logOut.setOnAction(event ->
 		{
-			// for (Book books : cartItems.keySet())
-			// {
-			// db.addToCart(buyerID, books.getBookID(), cartItems.get(books));
-			// }
-			// try
-			// {// NEED TO ADD METHOD IN DATABASE BEFORE CHANGING
-			// FileWriter cartFile = new FileWriter("Database/cart" +
-			// Integer.toString(buyerID) + ".txt");
-			// for (Book item : cartItems.keySet())
-			// {// save cart tiems for next login
-			// cartFile.write(item.getName() + "," +
-			// String.valueOf(cartItems.get(item)) + "," +
-			// Double.toString(item.getBasePrice()) + "," + item.getCategory() +
-			// "," + item.getCondition() + "\n");
-			// }
-			// cartFile.close();
-			// } catch (IOException e)
-			// {
-			// e.printStackTrace();
-			// }
 			cartItems.clear();
-
 			this.close();
 			loginStage.show();
-
 		});
 		super.add(display, 0, 0);
-
 	}
 
 	private VBox createListing(Book item)
@@ -157,14 +124,12 @@ public class BuyerView extends Windows
 		addToCart.setOnAction(event ->
 		{
 			addItems(item, number.getValue());
-			// cartItems.put(item, number.getValue());
-			// open file and add item to user's cart file
 		});
 		return book;
 	}
 
 	private VBox add(List<Book> books)
-	{
+	{// add books to row of VBox in multiples of 3
 		VBox ret = new VBox(10);
 		for (int i = 0; i < books.size(); i += 3)
 		{
@@ -191,12 +156,13 @@ public class BuyerView extends Windows
 	}
 
 	public void Default(VBox display)
-	{
+	{// Default view has books organized by condition
 		List<Book> newBook = new ArrayList<>();
 		List<Book> likeNew = new ArrayList<>();
 		List<Book> oldBook = new ArrayList<>();
+
 		for (int i = 0; i < this.books.size(); i++)
-		{
+		{// organizes books by their conditions
 			Book item = this.books.get(i);
 			if (item.getCondition().equals("New"))
 			{
@@ -236,7 +202,7 @@ public class BuyerView extends Windows
 	}
 
 	public void Alternate(VBox display)
-	{
+	{// ALternate view displays books by their category
 		Populate();
 		List<Book> copy = this.books;
 		VBox ret = new VBox();
@@ -252,7 +218,6 @@ public class BuyerView extends Windows
 
 		for (String i : category)
 		{
-
 			List<Book> filterCategory = new ArrayList<>();
 
 			for (Book item : copy)
@@ -267,11 +232,9 @@ public class BuyerView extends Windows
 			CatLabel.setFont(new Font(25));
 
 			ret.getChildren().addAll(CatLabel, add(filterCategory));
-
 		}
 		ret.setPadding(new Insets(0, 0, 0, 400));
 		display.getChildren().add(ret);
-
 	}
 
 	public void Populate()
@@ -282,65 +245,16 @@ public class BuyerView extends Windows
 	public void addItems(Book book, int quantity)
 	{
 		db.addToCart(buyerID, book.getBookID(), quantity);
-		// cartItems.put(book, quantity);
 	}
 
 	public void removeItemFromCart(Book book)
 	{
 		db.removeFromCart(book.getBookID(), buyerID);
-		// cartItems.remove(book);
 	}
 
 	public void setBuyerID(int buyerID)
 	{
 		this.buyerID = buyerID;
-
-		// ArrayList<Book> temp = db.getCart(buyerID);
-		// List<Pair<Book, Integer>> temp = db.getCart(buyerID);
-
-		// for (Pair<Book, Integer> book : temp)
-		// {
-		// cartItems.put(book.getKey(), book.getValue());
-		// }
-
-		// for (Book book : temp)
-		// {
-		// cartItems.put(book);
-		// }
-
-		// try
-		// {// populate cart w/ previous cart from last session
-		// File cartFile = new File("Database/cart" + Integer.toString(buyerID)
-		// + ".txt");
-		// cartFile.createNewFile();
-		// Scanner readPrevCart = new Scanner(cartFile);
-		// while (readPrevCart.hasNextLine())
-		// {
-		// String image = "https://m.media-amazon.com/images/I/71fL+SKczgL.jpg";
-		// String line = readPrevCart.nextLine();
-		// // title, amount of book, price, category, condition
-		// String[] info = line.split(",");
-		// if (info.length == 5)
-		// {
-		// cartItems.put(new Book(info[0].strip(), // title
-		// "Author", Double.parseDouble(info[2]), // price
-		// null, // User Seller
-		// info[3].strip(), // category
-		// info[4].strip(), // condition
-		// 0, // bookID
-		// image), Integer.parseInt(info[1].strip()));
-		// // image for book
-		// }
-		// }
-		// readPrevCart.close();
-		// } catch (FileNotFoundException e)
-		// {
-		// e.printStackTrace();
-		// } catch (IOException e)
-		// {
-		// System.err.println("Error creating file: " + e.getMessage());
-		// e.printStackTrace();
-		// }
 	}
 
 	public int getBuyerID()

@@ -9,14 +9,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/*
+ * This page has no functionality as we did not have to when initially completing project.
+ */
+
 public class AdminView extends Windows
 {// Responsible for displaying the admin page for admin users
 	Stage loginStage = new Stage();
 
 	public AdminView(Stage loginStage)
 	{
-		super();
-		// call initializer for parent class Windows
+		super(); // call initializer for parent class Windows
 		this.loginStage = loginStage;
 
 		Label homePageLabel = new Label("Admin Home Page");
@@ -25,9 +28,6 @@ public class AdminView extends Windows
 
 		Button transactionButton = new Button("Transaction");
 		setButtonColors(transactionButton, backgroundFill);
-		// transactionButton.setPadding(new Insets(20, 30, 20, 30));
-		// transactionButton.setTextFill(Color.rgb(255, 198, 39));
-		// transactionButton.setBackground(new Background(backgroundFill));
 		transactionButton.setOnAction(event ->
 		{// Maroon background and gold buttons to match ASU colors
 			System.out.println("transaction");
@@ -35,9 +35,6 @@ public class AdminView extends Windows
 
 		Button statsButton = new Button("View Stats");
 		setButtonColors(statsButton, backgroundFill);
-		// statsButton.setPadding(new Insets(20, 30, 20, 30));
-		// statsButton.setTextFill(Color.rgb(255, 198, 39));
-		// statsButton.setBackground(new Background(backgroundFill));
 		statsButton.setOnAction(event ->
 		{
 			System.out.println("stats");
@@ -45,9 +42,6 @@ public class AdminView extends Windows
 
 		Button manageButton = new Button("Manage");
 		setButtonColors(manageButton, backgroundFill);
-		// manageButton.setPadding(new Insets(20, 30, 20, 30));
-		// manageButton.setTextFill(Color.rgb(255, 198, 39));
-		// manageButton.setBackground(new Background(backgroundFill));
 		manageButton.setOnAction(event ->
 		{
 			System.out.println("manage");
@@ -55,9 +49,6 @@ public class AdminView extends Windows
 
 		Button logoutButton = new Button("Log Out");
 		setButtonColors(logoutButton, backgroundFill);
-		// logoutButton.setPadding(new Insets(20, 30, 20, 30));
-		// logoutButton.setTextFill(Color.rgb(255, 198, 39));
-		// logoutButton.setBackground(new Background(backgroundFill));
 		logoutButton.setOnAction(event ->
 		{
 			System.out.println("Log out");
@@ -69,7 +60,6 @@ public class AdminView extends Windows
 		homePageBox.getChildren().addAll(homePageLabel, transactionButton, statsButton, manageButton, logoutButton);
 		super.add(homePageBox, 0, 0);
 		super.pane.setAlignment(Pos.CENTER_LEFT);
-
 	}
 
 	public void setButtonColors(Button button, BackgroundFill bFill)

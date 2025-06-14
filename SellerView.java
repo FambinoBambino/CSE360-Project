@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -76,7 +75,6 @@ public class SellerView extends Windows
         homeLayout.setPadding(new Insets(20));
 
         mainLayout.setCenter(homeLayout);
-
     }
 
     private void displayMyBooks()
@@ -118,9 +116,8 @@ public class SellerView extends Windows
 
         // populate "grid" with books
         if (listedItems.isEmpty())
-        {
+        {// when there are no books listed
             Label noBooksLabel = new Label("No books available.");
-            // when there are no books listed
             noBooksLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
             bookGrid.add(noBooksLabel, 0, 0);
         } else
@@ -129,8 +126,6 @@ public class SellerView extends Windows
             {
                 Book book = listedItems.get(i);
 
-                // attempt to separate title, price, and buttons for better
-                // spacing
                 Label titleLabel = new Label(book.getName());
                 titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
                 Label priceLabel = new Label("$" + String.format("%.2f", book.getBasePrice()) + " (" + book.getCondition() + ")");
@@ -143,8 +138,6 @@ public class SellerView extends Windows
                 {
                     listedItems.remove(bookIndex);
                     db.removeBook(book.getBookID());
-                    // db.removeLineFromFile("Database/books.txt",
-                    // book.getBookID());
                     displayMyBooks(); // refresh view
                 });
 
@@ -157,7 +150,6 @@ public class SellerView extends Windows
 
         // add elements to layout
         VBox contentLayout = new VBox(20, title, bookGrid);
-        // center title and grid
         contentLayout.setAlignment(Pos.CENTER);
 
         mainLayout.setTop(topNavigation);
@@ -195,7 +187,6 @@ public class SellerView extends Windows
         Label authorLabel = new Label("Author Name");
         TextField authorField = new TextField();
         Label conditionLabel = new Label("Condition");
-        // TextField conditionField = new TextField();
         Label categoryLabel = new Label("Category");
         TextField categoryField = new TextField();
         Label priceLabel = new Label("Original Price");
@@ -242,7 +233,6 @@ public class SellerView extends Windows
                     String name = nameField.getText();
                     String condition = conditions.getValue();
                     String category = categoryField.getText();
-                    // double price = Double.parseDouble(priceField.getText());
                     double finalPrice = Double.parseDouble(finalPriceValue.getText());
                     String author = authorField.getText();
 

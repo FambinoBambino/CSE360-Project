@@ -1,16 +1,6 @@
-
-// import java.io.File;
-// import java.io.FileWriter;
-// import java.io.IOException;
-// import java.io.File;
-// import java.io.FileWriter;
-// import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Map;
-// import java.util.Scanner;
-// import java.util.Scanner;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -49,7 +39,6 @@ public class CartView extends Windows
 			count.getChildren().addAll(new Label(item.getName() + " x " + String.valueOf(book.get(item))), new Label("$" + String.valueOf(trunc(book.get(item) * item.getBasePrice()))));
 			receiptCount.getChildren().addAll(new Label(item.getName() + " x " + String.valueOf(book.get(item))), new Label("$" + String.valueOf(trunc(book.get(item) * item.getBasePrice()))));
 			total += item.getBasePrice() * book.get(item);
-			// price of a book * quantity
 			ret.getChildren().add(count);
 			receipt.getChildren().add(receiptCount);
 		}
@@ -83,7 +72,7 @@ public class CartView extends Windows
 
 		Pane cartPane = new Pane();
 		cartPane.setStyle("-fx-background-color: rgb(140,29,64), rgb(255,198,39); -fx-background-insets: 0, 5");
-		cartPane.getChildren().addAll(ret);
+		cartPane.getChildren().addAll(ret);// ASU colors used for these panes
 		// cartPane.setVisible(false);
 
 		Pane confirmationPane = new Pane();
@@ -102,33 +91,14 @@ public class CartView extends Windows
 			book.clear();
 
 			db.removeAllFromCart(buyerID);
-
-			// try
-			// {
-			// Scanner reader = new Scanner(new File("Database/cart" +
-			// Integer.toString(buyerID) + ".txt"));
-			// FileWriter writer = new FileWriter("Database/cart" +
-			// Integer.toString(buyerID) + ".txt");
-
-			// while (reader.hasNextLine())
-			// {
-			// writer.write("\n");
-			// }
-			// reader.close();
-			// writer.close();
-			// } catch (IOException e)
-			// {
-			// e.printStackTrace();
-			// }
-
 		});
+
 		Button noButton = new Button("No");
 		noButton.setOnAction(event ->
 		{
 			confirmationPane.setVisible(false);
 			cartPane.setVisible(true);
 			choice.setVisible(true);
-
 		});
 
 		Button homeButton = new Button("Home");
@@ -150,12 +120,10 @@ public class CartView extends Windows
 		receiptPane.getChildren().addAll(receipt);
 
 		checkOut.setOnAction(event ->
-		{
-			// show confirmed screen along with transaction added to list.
+		{// show confirmed screen along with transaction added to list.
 			cartPane.setVisible(false);
 			choice.setVisible(false);
 			confirmationPane.setVisible(true);
-
 		});
 
 		cancel.setOnAction(event ->
@@ -174,25 +142,6 @@ public class CartView extends Windows
 		{
 			book.clear();
 			db.removeAllFromCart(buyerID);
-
-			// try
-			// {
-			// Scanner reader = new Scanner(new File("Database/cart" +
-			// Integer.toString(buyerID) + ".txt"));
-			// FileWriter writer = new FileWriter("Database/cart" +
-			// Integer.toString(buyerID) + ".txt");
-
-			// while (reader.hasNextLine())
-			// {
-			// writer.write("\n");
-			// }
-			// reader.close();
-			// writer.close();
-			// } catch (IOException e)
-			// {
-			// e.printStackTrace();
-			// }
-
 			this.close();
 			view.show();
 		});
@@ -216,9 +165,8 @@ public class CartView extends Windows
 	}
 
 	private Double trunc(Double value)
-	{
+	{// Truncates price of books to two decimals so they do not appear long
 		double truncated = new BigDecimal(value).setScale(2, RoundingMode.HALF_UP).doubleValue();
 		return truncated;
 	}
-
 }

@@ -9,10 +9,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.util.Pair;
 
-//Still need:
-// Add to user cart / remove from cart
-// delete any row
-
 public class SQLDatabase
 {// static SQLdatabase instance as singleton aka only intialize once
 
@@ -21,10 +17,9 @@ public class SQLDatabase
     // OLD PASS = R00tt!!r
 
     private SQLDatabase()
-    {
-        // SQLDatabase really only needs to be initialized once as it is just an
-        // interface for the data
-        // could add like a cache here
+    {// SQLDatabase really only needs to be initialized once as it is just an
+     // interface for the data
+     // could add like a cache here
     }
 
     public static SQLDatabase getInstance()
@@ -73,8 +68,7 @@ public class SQLDatabase
         String SQL = "SELECT * FROM " + tableName + " WHERE user_id = ?";
 
         try (Connection dbConnect = DriverManager.getConnection("jdbc:mysql://localhost:3306/SunDevil_Books", "root", SQL_PASSWORD); PreparedStatement stmt = dbConnect.prepareStatement(SQL))
-        {// closure of dbConnect and PreparedStatement is auto-handled by
-         // try-catch
+        {
             stmt.setInt(1, userID);
 
             ResultSet result = stmt.executeQuery();
@@ -112,7 +106,7 @@ public class SQLDatabase
     }
 
     public void addBook(Book book, int sellerID)
-    {// IMPLEMENTED
+    {// Allows sellers to add books to database
         System.out.println("Welcome to adding books");
 
         String SQL = "INSERT INTO books (title, authorName, sellerID, book_category, book_condition, price) VALUES (?,?,?,?,?,?)";
@@ -135,7 +129,7 @@ public class SQLDatabase
     }
 
     public Book getBook(int bookID)
-    {// IMPLEMENTED
+    {// allows for a single book to be retrieved from databse
         System.out.println("Welcome to getting a book info from SQL");
 
         String SQL = "SELECT * FROM books WHERE book_id = ?";
@@ -145,7 +139,7 @@ public class SQLDatabase
         {
             stmt.setInt(1, bookID);
             ResultSet result = stmt.executeQuery();
-            // result holds output from the SQL
+
             if (result.next())
             {
                 String title = result.getString("title");
@@ -173,7 +167,7 @@ public class SQLDatabase
     }
 
     public ArrayList<Book> getAllBooks()
-    {// IMPLEMENTED
+    {// Retrieves all books to populate buyer page
         ArrayList<Book> books = new ArrayList<Book>();
 
         System.out.println("Welcome to getting all books from SQL");
@@ -188,7 +182,6 @@ public class SQLDatabase
                 System.out.println("Adding book titled -> " + result.getString("title"));
                 books.add(temp);
                 System.out.println(result.getString("title") + " " + result.getString("authorName") + " " + result.getDouble("price") + " " + result.getString("sellerID") + " " + result.getString("book_category") + " " + result.getString("book_condition") + " " + result.getInt("book_id"));
-
             }
             System.out.println("All books gathered");
         } catch (SQLException sqle)
@@ -200,9 +193,7 @@ public class SQLDatabase
     }
 
     public ArrayList<Book> getAllBooks(int sellID)
-    {// over load method for Seller to gather all their books from
-     // SQLdatabase
-     // IMPLEMENTED
+    {// Retrieves all books of current seller to populate seller listings page
         ArrayList<Book> books = new ArrayList<Book>();
 
         String SQL = "SELECT * FROM books WHERE sellerID = ?";
@@ -213,15 +204,13 @@ public class SQLDatabase
         {
             stmt.setInt(1, sellID);
             ResultSet result = stmt.executeQuery();
-            // result holds output from the SQL
+
             while (result.next())
             {
                 String output = result.getString("title") + " " + result.getString("authorName") + " " + result.getString("price") + " " + result.getString("sellerID") + " " + result.getString("book_category") + " " + result.getString("book_condition") + " " + result.getString("book_id");
-
                 Book temp = new Book(result.getString("title"), result.getString("authorName"), result.getDouble("price"), getUser(result.getInt("sellerID"), "Seller"), result.getString("book_category"), result.getString("book_condition"), result.getInt("book_id"));
                 books.add(temp);
                 System.out.println("\n" + output);
-
             }
         } catch (SQLException sqle)
         {
@@ -232,8 +221,7 @@ public class SQLDatabase
     }
 
     public int validateFromEmail(String email, String password, String userType)
-    {// IMPLEMENTED * Rework method to validate from email since email is the
-     // only unique data a user has? (Besides userID but that is SQL only)
+    {// Validates user at login page through email+password check
         System.out.println("Welcome to getting user info from SQL");
         String tableName = userType.toLowerCase() + "s";
         String SQL = "SELECT * FROM " + tableName + " WHERE email = ?";
@@ -241,8 +229,6 @@ public class SQLDatabase
         try (Connection dbConnect = DriverManager.getConnection("jdbc:mysql://localhost:3306/SunDevil_Books", "root", SQL_PASSWORD); PreparedStatement stmt = dbConnect.prepareStatement(SQL);)
         {
             stmt.setString(1, email);
-            // bind email safely, 1 = 1st parameter placeholder and this line
-            // replaces 1st parameter with email
 
             ResultSet result = stmt.executeQuery();
 
@@ -251,12 +237,6 @@ public class SQLDatabase
                 String output = result.getString("first_name") + " " + result.getString("last_name") + " " + result.getString("email") + " " + result.getString("pass_word");
                 System.out.println(output);
                 return result.getInt("user_id");
-
-                // if (result.getString("pass_word").equals(password))
-                // {// previously ignored case sensitivity, but password should
-                // be
-                // // case sensitive
-                // }
             } else
             {
                 System.out.println("No user was found with email: " + email);
@@ -271,7 +251,7 @@ public class SQLDatabase
     }
 
     public boolean ExistingUser(String email, String userType)
-    {// IMPLEMENTED
+    {// checks if user trying to sign up already exists
         System.out.println("Welcome to getting user info from SQL");
         String tableName = userType.toLowerCase() + "s";
         String SQL = "SELECT * FROM " + tableName + " WHERE email = ?";
@@ -287,7 +267,6 @@ public class SQLDatabase
                 String output = result.getString("first_name") + " " + result.getString("last_name") + " " + result.getString("email") + " " + result.getString("pass_word");
                 System.out.println("\n" + output);
                 return true; // user exists
-
             } else
             {
                 System.out.println("User with email " + email + " does not exist");
@@ -304,7 +283,6 @@ public class SQLDatabase
     public void addToCart(int buyerID, int bookID, int amount)
     {
         System.out.println("Welcome to adding books to cart");
-        // String SQL = "SELECT FROM buyers WHERE user_id = ?";
         String SQL = "INSERT INTO cart (user_id, book_id, amount) " + "VALUES (?, ?, ?) " + "ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount)";
 
         try (Connection dbConnect = DriverManager.getConnection("jdbc:mysql://localhost:3306/SunDevil_Books", "root", SQL_PASSWORD); PreparedStatement stmt = dbConnect.prepareStatement(SQL))
@@ -313,7 +291,6 @@ public class SQLDatabase
             stmt.setInt(2, bookID);
             stmt.setInt(3, amount);
             stmt.executeUpdate();
-
         } catch (SQLException sqle)
         {
             Logger.getLogger(SQLDatabase.class.getName()).log(Level.SEVERE, null, sqle);
@@ -331,7 +308,6 @@ public class SQLDatabase
             stmt.setInt(1, bookID);
             stmt.setInt(2, buyerID);
             stmt.executeUpdate();
-
         } catch (SQLException sqle)
         {
             Logger.getLogger(SQLDatabase.class.getName()).log(Level.SEVERE, null, sqle);
@@ -348,7 +324,6 @@ public class SQLDatabase
         {
             stmt.setInt(1, buyerID);
             stmt.executeUpdate();
-
         } catch (SQLException sqle)
         {
             Logger.getLogger(SQLDatabase.class.getName()).log(Level.SEVERE, null, sqle);
@@ -357,7 +332,7 @@ public class SQLDatabase
     }
 
     public void removeBook(int bookID)
-    {
+    {// allows seller to de-list book
         System.out.println("Welcome to removing book from listing by seller");
         String SQL = "DELETE FROM books WHERE book_id = ?";
 
@@ -373,80 +348,25 @@ public class SQLDatabase
         }
     }
 
-    // public ArrayList<Book> getCart(int buyerID)
-    // {
-    // ArrayList<Book> books = new ArrayList<Book>();
-
-    // String SQL = "SELECT * FROM cart WHERE user_id = ?";
-
-    // System.out.println("Welcome to getting all books from cart for certain
-    // buyer from SQL");
-
-    // try (Connection dbConnect =
-    // DriverManager.getConnection("jdbc:mysql://localhost:3306/SunDevil_Books",
-    // "root", SQL_PASSWORD); PreparedStatement stmt =
-    // dbConnect.prepareStatement(SQL))
-    // {
-    // stmt.setInt(1, buyerID);
-    // ResultSet result = stmt.executeQuery();
-    // // result holds output from the SQL
-    // while (result.next())
-    // {
-    // String output = result.getString("title") + " " +
-    // result.getString("authorName") + " " + result.getString("price") + " " +
-    // result.getString("sellerID") + " " + result.getString("category") + " " +
-    // result.getString("book_condition") + " " + result.getString("book_id");
-
-    // Book temp = new Book(result.getString("title"),
-    // result.getString("authorName"), result.getDouble("price"),
-    // getUser(result.getInt("sellerID"), "Seller"),
-    // result.getString("book_category"), result.getString("book_condition"),
-    // result.getInt("book_id"));
-    // books.add(temp);
-    // System.out.println("\n" + output);
-
-    // }
-    // } catch (SQLException sqle)
-    // {
-    // Logger.getLogger(SQLDatabase.class.getName()).log(Level.SEVERE, null,
-    // sqle);
-    // System.out.println("SQL IS BAD!!" + sqle.getMessage());
-    // }
-    // return books;
-    // }
-
     public List<Pair<Book, Integer>> getCart(int buyerID)
-    {
+    {// returns book info from current users cart
         List<Pair<Book, Integer>> cartBooks = new ArrayList<>();
-        // List is better than ArrayList since it is more generic?
-
-        // ArrayList<Book> books = new ArrayList<Book>();
-
-        // String SQL = "SELECT * FROM cart WHERE user_id = ?";
         String SQL = "SELECT b.*, c.amount FROM books b JOIN cart c ON b.book_id = c.book_id WHERE c.user_id = ?";
+        // Above String = "Select book ids from book table where book id
+        // equals the one found in cart table but only where cart user id = ? "
 
         System.out.println("Welcome to getting all books from cart for certain buyer from SQL");
 
         try (Connection dbConnect = DriverManager.getConnection("jdbc:mysql://localhost:3306/SunDevil_Books", "root", SQL_PASSWORD); PreparedStatement stmt = dbConnect.prepareStatement(SQL))
-        {// need to do another SQL query beforehand that gives us bookID first
-         // and then do this query to give us info of book. we'll create an int
-         // array for 1st one and then loop through array of book ID's to get
-         // book infos
-
-            // SCRATCH ALL OF ABOVE, just do a concatenated query to do it all
-            // in one
+        {
             stmt.setInt(1, buyerID);
             ResultSet result = stmt.executeQuery();
-            // result holds output from the SQL
             while (result.next())
             {
                 String output = result.getString("title") + " " + result.getString("authorName") + " " + result.getString("price") + " " + result.getString("sellerID") + " " + result.getString("book_category") + " " + result.getString("book_condition") + " " + result.getString("book_id");
-
                 Book temp = new Book(result.getString("title"), result.getString("authorName"), result.getDouble("price"), getUser(result.getInt("sellerID"), "Seller"), result.getString("book_category"), result.getString("book_condition"), result.getInt("book_id"));
                 cartBooks.add(new Pair<Book, Integer>(temp, result.getInt("amount")));
-                // books.add(temp);
                 System.out.println("\n" + output);
-
             }
         } catch (SQLException sqle)
         {
@@ -454,6 +374,5 @@ public class SQLDatabase
             System.out.println("SQL IS BAD!!" + sqle.getMessage());
         }
         return cartBooks;
-        // return books;
     }
 }
