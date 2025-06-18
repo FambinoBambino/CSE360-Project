@@ -16,10 +16,6 @@ public class LoginView extends Windows
 	private int userID = -1;
 	private SQLDatabase db = SQLDatabase.getInstance();
 
-	private AdminView adminPage = new AdminView(super.windowStage);
-	private BuyerView buyerPage = new BuyerView(super.windowStage);
-	private SellerView sellerPage = new SellerView(super.windowStage);
-
 	public LoginView()
 	{
 		super(); // call initializer for parent class Windows
@@ -48,6 +44,7 @@ public class LoginView extends Windows
 				result = validate(email.getText(), password.getText(), "Admin");
 				if (result == true)
 				{
+					AdminView adminPage = new AdminView(super.windowStage);
 					wrongCred.setVisible(false);
 					email.clear();
 					password.clear();
@@ -60,6 +57,7 @@ public class LoginView extends Windows
 				result = validate(email.getText(), password.getText(), "Seller");
 				if (result == true)
 				{
+					SellerView sellerPage = new SellerView(super.windowStage);
 					wrongCred.setVisible(false);
 					email.clear();
 					password.clear();
@@ -73,6 +71,7 @@ public class LoginView extends Windows
 				result = validate(email.getText(), password.getText(), "Buyer");
 				if (result == true)
 				{
+					BuyerView buyerPage = new BuyerView(super.windowStage);
 					wrongCred.setVisible(false);
 					email.clear();
 					password.clear();
@@ -121,11 +120,6 @@ public class LoginView extends Windows
 			return true;
 		}
 		return false;
-	}
-
-	public AdminView getAdminPage()
-	{
-		return adminPage;
 	}
 
 	public void signUp(Stage stage)
